@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import React from "react";
 
 function Movie() {
   const [movie, setMovie] = useState({})
   const params = useParams()
   const movieID = params.id
-
-  console.log(params)
-  console.log(movie)
 
   useEffect(()=>{
     fetch(`http://localhost:4000/movies/${movieID}`)
@@ -25,7 +23,8 @@ function Movie() {
       <main>
         <h1>{movie.title}</h1>
         <p>{movie.time}</p>
-      </main>
+        {Array.isArray(movie.genres) ? (movie.genres.map(genre=> <span key={genre}>{genre}</span>)) : (<span>No genres available</span>)}   
+        </main>
     </>
   );
 };
